@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<!-- 配置hibernate使用的连接池  pool(池) 
+		<property name="connection.pool_size">1</property>-->
+		<!-- 配置c3p0 -->
+		<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+		<property name="hibernate.c3p0.max_size">10</property>
+		<property name="hibernate.c3p0.min_size">3</property>
+		
+		<!-- 开启二级缓存 -->
+		<property name="hibernate.cache.use_second_level_cache">false</property>
+		<!-- 指定二级缓存的实现类 -->
+		<property name="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+		<!-- 开启查询缓存 -->
+		<property name="hibernate.cache.use_query_cache">true</property>
+
+		<!-- 配置数据库方言  dialect(方言)  -->
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+		<!-- Enable Hibernate's automatic session context management -->
+		<property name="current_session_context_class">thread</property>
+
+		<!-- 打印hibernate执行的sql语句 -->
+		<property name="show_sql">true</property>
+		<!-- 格式化打印的sql语句 -->
+		<property name="format_sql">true</property>
+
+		<!-- 自动创建数据库的表 和 关系结构
+			update:如果没有数据库的表则会自动创建
+			create:每次运行都会创建数据库的表结构
+		 -->
+		<property name="hbm2ddl.auto">update</property>
+
+	</session-factory>
+</hibernate-configuration>
