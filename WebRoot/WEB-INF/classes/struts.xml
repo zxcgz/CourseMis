@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+	<package name="default" extends="struts-default">
+		<action name="loginCheck" class="com.coursemis.action.LoginCheckAction"
+			method="login">
+		</action>
+	</package>
+	<!-- 设置上传的文件总大小 -->
+	<constant name="struts.multipart.maxSize" value="3000000"></constant>
+	<package name="teacher" extends="struts-default">
+
+		<action name="source_getbytid" class="com.coursemis.action.SourceMangerAction"
+			method="queryAllByTid" />
+		<action name="source_bytid" class="com.coursemis.action.SourceActivion"
+			method="queryAllByTid"></action>
+
+		<action name="telNum_get" class="com.coursemis.action.Student_CourseAction"
+			method="getStudentTelNumByCId">
+		</action>
+		<action name="note_get" class="com.coursemis.action.NoteAction"
+			method="getNoteOfTeacher">
+		</action>
+		<action name="note_add" class="com.coursemis.action.NoteAction"
+			method="addNote">
+		</action>
+		<action name="course_teacher" class="com.coursemis.action.Course_TeacherAction"
+			method="getCourseOfTeacher">
+		</action>
+		<action name="course_add" class="com.coursemis.action.CoursetimeAction"
+			method="addCoursetime">
+		</action>
+		<action name="course_edit" class="com.coursemis.action.CoursetimeAction"
+			method="editCoursetime">
+		</action>
+		<action name="course_del" class="com.coursemis.action.CoursetimeAction"
+			method="deleteCourseOfTeacher">
+		</action>
+		<action name="pwd_change" class="com.coursemis.action.LoginCheckAction"
+			method="pwdChange">
+		</action>
+		<action name="course_info" class="com.coursemis.action.CoursetimeAction"
+			method="getCourseInfo">
+		</action>
+		<action name="student_course" class="com.coursemis.action.Student_CourseAction"
+			method="getStudentOfCourse">
+		</action>
+		<action name="student_del_all" class="com.coursemis.action.Student_CourseAction"
+			method="delAllStudentOfCourse">
+		</action>
+		<action name="student_del" class="com.coursemis.action.Student_CourseAction"
+			method="delStudentOfCourse">
+		</action>
+		<action name="student_get_all" class="com.coursemis.action.Student_CourseAction"
+			method="getStudentNotInCourse">
+		</action>
+		<action name="add_student" class="com.coursemis.action.Student_CourseAction"
+			method="addStudentToCourse">
+		</action>
+		<action name="course_student" class="com.coursemis.action.Student_CourseAction"
+			method="getCourseOfStudent">
+		</action>
+		<action name="evaluate" class="com.coursemis.action.EvaluationAction"
+			method="addEvaluation">
+		</action>
+		<action name="evaluate_get" class="com.coursemis.action.EvaluationAction"
+			method="getEvaluation">
+		</action>
+		<action name="evaluate_zhu_get" class="com.coursemis.action.EvaluationAction"
+			method="getEvaluationZhuXing">
+		</action>
+		<action name="evaluate_sms_get" class="com.coursemis.action.EvaluationAction"
+			method="getEvaluationSms">
+		</action>
+		<action name="teacher_course" class="com.coursemis.action.TeacherMentionName"
+			method="selectCourse"></action>
+
+		<action name="teacher_course_week" class="com.coursemis.action.TeacherMentionName"
+			method="selectCourse_week"></action>
+		<action name="teacher_course_time" class="com.coursemis.action.TeacherMentionName"
+			method="selectCourse_time"></action>
+		<action name="teacher_course_studentNames" class="com.coursemis.action.TeacherMentionName"
+			method="selectTeacherCourseStudentNames"></action>
+		<action name="teacher_SignIn" class="com.coursemis.action.TeacherMentionName"
+			method="teacherSignIn"></action>
+		<action name="teacher_courseStudentCount" class="com.coursemis.action.TeacherMentionName"
+			method="teacherCourseStudentCount"></action>
+		<action name="teacher_StudentCourse" class="com.coursemis.action.TeacherMentionName"
+			method="selectStudentCourseInfo"></action>
+		<action name="teacher_homeworkSelect" class="com.coursemis.action.TeacherManageHomeWorkAction"
+			method="homeworkSelect"></action>
+		<action name="teacher_checkhomework" class="com.coursemis.action.TeacherManageHomeWorkAction"
+			method="homeworkCheck"></action>
+		<action name="teacher_commenthomework" class="com.coursemis.action.TeacherManageHomeWorkAction"
+			method="homeworkComment"></action>
+
+		<action name="teacher_tupLoadHomework" class="com.upload.UploadAction"
+			method="shareMediaData">
+			<!-- 上传拦截器 -->
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">2000000</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+			<!-- 动态设置savePath的属性值 <param name="savePath">E:/uplod/teacherHomeWork</param> -->
+			<!-- <param name="savePath">/teacherHomeWork</param> -->
+			<result name="success">/index.jsp</result>
+			<!-- 保存的位置 -->
+			<param name="savePath">/homework</param>
+		</action>
+
+		<action name="source_down" class="com.upload.UploadAction"
+			method="down">
+			<result type="stream">
+				<param name="inputName">instream</param>
+				<param name="contentDisposition">attachment;downfilename=${downfilename}</param>
+			</result>
+		</action>
+	</package>
+
+	<package name="student" extends="struts-default">
+		<action name="student_StudentCourse" class="com.coursemis.action.StudentOperationAction"
+			method="selectStudentCourseInfo"></action>
+		<action name="student_SignIn" class="com.coursemis.action.StudentOperationAction"
+			method="studentSignIn"></action>
+		<action name="student_SignInComfirm" class="com.coursemis.action.StudentOperationAction"
+			method="studentSignInComfirm"></action>
+		<action name="student_StudentCourseCheckhomework" class="com.coursemis.action.DebugAction"
+			method="StudentCourseCheckhomework"></action>
+		<action name="student_StudentClassCourseCheckhomework" class="com.coursemis.action.StudentOperationAction"
+			method="studentClassCourseCheckhomework"></action>
+
+		<action name="student_supLoadHomework" class="com.upload.StudentUploadAction">
+			<!-- 上传拦截器 -->
+			<interceptor-ref name="fileUpload"></interceptor-ref>
+			<interceptor-ref name="defaultStack" />
+			<!-- 动态设置savePath的属性值 -->
+			<result name="success">/index.jsp</result>
+		</action>
+
+	</package>
+	<package name="share" extends="struts-default">
+		<action name="ShareMediaData" class="com.upload.UploadVideoAction"
+			method="shareMediaData">
+			<param name="savePath">/mediaShared</param>
+			<result name="success">/index.jsp</result>
+		</action>
+		<action name="getMedia" class="com.coursemis.action.DebugAction"
+			method="getMediaData"></action>
+	</package>
+
+
+	<package name="studentclasshomework" extends="struts-default">
+		<action name="student_StudentClassHMPath" class="com.coursemis.action.StudentOperationAction"
+			method="studentClassHMPath"></action>
+		<action name="student_StudentClassCourseCheckWhichhomework"
+			class="com.coursemis.action.StudentOperationAction" method="studentclasshomework_1"></action>
+	</package>
+</struts>    
