@@ -50,14 +50,8 @@ public class Sourcemanage implements java.io.Serializable {
 		this.smDateTime = smDateTime;
 		this.studenthomeworks = studenthomeworks;
 	}
-	// Property accessors
 
-	@Override
-	public String toString() {
-		return "Sourcemanage [smId=" + smId + ", course=" + course + ", smName=" + smName + ", smType=" + smType
-				+ ", smPath=" + smPath + ", smUploader=" + smUploader + ", smDateTime=" + smDateTime
-				+ ", studenthomeworks=" + studenthomeworks + "]";
-	}
+	// Property accessors
 
 	public Integer getSmId() {
 		return this.smId;

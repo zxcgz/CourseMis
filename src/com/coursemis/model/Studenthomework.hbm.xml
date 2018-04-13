@@ -11,7 +11,7 @@
             <generator class="increment" />
         </id>
         <many-to-one name="student" class="com.coursemis.model.Student" fetch="select">
-            <column name="SH_S_ID" not-null="false">
+            <column name="SH_S_ID">
                 <comment>学生id，外键</comment>
             </column>
         </many-to-one>
@@ -36,7 +36,7 @@
             </column>
         </property>
         <property name="shDateTime" type="java.sql.Timestamp">
-            <column name="SH_DateTime" length="19" not-null="true">
+            <column name="SH_DateTime" length="0" not-null="true">
                 <comment>上传时间</comment>
             </column>
         </property>

@@ -116,6 +116,24 @@
 				<param name="contentDisposition">attachment;downfilename=${downfilename}</param>
 			</result>
 		</action>
+		<!-- 发送随堂测验的消息 -->
+		<action name="sendTestMessage" class="com.coursemis.action.TeacherManageHomeWorkAction"
+			method="sendTestMessage"></action>
+		<!-- 发送提问消息 -->
+		<action name="sendQuizMessage" class="com.coursemis.action.TeacherManageHomeWorkAction"
+			method="sendQuizMessage"></action>
+		<!-- 发送反馈消息 -->
+		<action name="sendCallBackMessage" class="com.coursemis.action.TeacherManageHomeWorkAction"
+			method="sendCallBackMessage"></action>
+		<!-- 教师获取反馈 -->
+		<action name="getCallBack" class="com.coursemis.action.TeacherManageHomeWorkAction"
+			method="getCallBack"></action>
+		<!-- 教师获取成绩信息 -->
+		<action name="getScore" class="com.coursemis.action.TeacherManageHomeWorkAction"
+			method="getScore"></action>
+		<!-- 教师发送提问成绩 -->
+		<action name="sendQuizScore" class="com.coursemis.action.TeacherManageHomeWorkAction"
+			method="sendQuizScore"></action>
 	</package>
 
 	<package name="student" extends="struts-default">
@@ -137,7 +155,15 @@
 			<!-- 动态设置savePath的属性值 -->
 			<result name="success">/index.jsp</result>
 		</action>
-
+		<!-- 学生获取测验信息 -->
+		<action name="getTest" class="com.coursemis.action.TeacherManageHomeWorkAction"
+			method="getTest"></action>
+		<!-- 学生发送测验 -->
+		<action name="sendTest" class="com.coursemis.action.TeacherManageHomeWorkAction"
+			method="sendTest"></action>
+		<!-- 学生发送反馈 -->
+		<action name="sendCallBack" class="com.coursemis.action.TeacherManageHomeWorkAction"
+			method="sendCallBack"></action>
 	</package>
 	<package name="share" extends="struts-default">
 		<action name="ShareMediaData" class="com.upload.UploadVideoAction"
@@ -155,5 +181,10 @@
 			method="studentClassHMPath"></action>
 		<action name="student_StudentClassCourseCheckWhichhomework"
 			class="com.coursemis.action.StudentOperationAction" method="studentclasshomework_1"></action>
+	</package>
+	<!-- 测试okhttp的action -->
+	<package name="okhttp" extends="struts-default">
+		<action name="okhttp" class="com.coursemis.action.TestOkHttpAction"
+			method="okhttp"></action>
 	</package>
 </struts>    

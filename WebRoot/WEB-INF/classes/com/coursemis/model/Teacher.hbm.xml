@@ -40,6 +40,19 @@
                 <comment>密码</comment>
             </column>
         </property>
+        <property name="THead" type="java.lang.String">
+            <column name="T_Head" length="65535">
+                <comment>头像</comment>
+            </column>
+        </property>
+        <set name="locations" inverse="true">
+            <key>
+                <column name="T_ID" not-null="true" unique="true">
+                    <comment>主键，教师id</comment>
+                </column>
+            </key>
+            <one-to-many class="com.coursemis.model.Location" />
+        </set>
         <set name="messages" inverse="true">
             <key>
                 <column name="M_T_ID" not-null="true">
@@ -47,6 +60,22 @@
                 </column>
             </key>
             <one-to-many class="com.coursemis.model.Message" />
+        </set>
+        <set name="signins" inverse="true">
+            <key>
+                <column name="T_ID">
+                    <comment>教师id，外键</comment>
+                </column>
+            </key>
+            <one-to-many class="com.coursemis.model.Signin" />
+        </set>
+        <set name="notes" inverse="true">
+            <key>
+                <column name="N_T_ID" not-null="true">
+                    <comment>教师id，外键</comment>
+                </column>
+            </key>
+            <one-to-many class="com.coursemis.model.Note" />
         </set>
         <set name="courses" inverse="true">
             <key>

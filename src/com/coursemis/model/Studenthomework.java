@@ -24,6 +24,16 @@ public class Studenthomework implements java.io.Serializable {
 	public Studenthomework() {
 	}
 
+	/** minimal constructor */
+	public Studenthomework(Sourcemanage sourcemanage, String shName,
+			String shPath, Integer shScore, Timestamp shDateTime) {
+		this.sourcemanage = sourcemanage;
+		this.shName = shName;
+		this.shPath = shPath;
+		this.shScore = shScore;
+		this.shDateTime = shDateTime;
+	}
+
 	/** full constructor */
 	public Studenthomework(Student student, Sourcemanage sourcemanage,
 			String shName, String shPath, Integer shScore, Timestamp shDateTime) {

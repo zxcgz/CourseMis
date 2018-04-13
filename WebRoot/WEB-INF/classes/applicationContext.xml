@@ -39,6 +39,12 @@
 				<value>com/coursemis/model/Studentcourse.hbm.xml</value>
 				<value>com/coursemis/model/Studenthomework.hbm.xml</value>
 				<value>com/coursemis/model/Teacher.hbm.xml</value>
+				<value>com/coursemis/model/Location.hbm.xml</value>
+				<value>com/coursemis/model/Signin.hbm.xml</value>
+				<value>com/coursemis/model/Score.hbm.xml</value>
+				<value>com/coursemis/model/Questionbank.hbm.xml</value>
+				<value>com/coursemis/model/Period.hbm.xml</value>
+				<value>com/coursemis/model/Evaluation.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -75,6 +81,31 @@
 	<bean id="sourceManageDAO" class="com.coursemis.dao.impl.SourceManageDAO"
 		parent="baseDAO">
 	</bean>
+	<bean id="locationDAO" class="com.coursemis.dao.impl.LocationDAO"
+		parent="baseDAO">
+	</bean>
+	<bean id="signInDAO" class="com.coursemis.dao.impl.SignInDAO"
+		parent="baseDAO">
+	</bean>
+	<bean id="questionBankDAO" class="com.coursemis.dao.impl.QuestionBankDAO"
+		parent="baseDAO">
+	</bean>
+	<bean id="scoreDAO" class="com.coursemis.dao.impl.ScoreDAO"
+		parent="baseDAO">
+	</bean>
+	<bean id="periodDAO" class="com.coursemis.dao.impl.PeriodDAO"
+		parent="baseDAO">
+	</bean>
+	<bean id="evaluationDAO" class="com.coursemis.dao.impl.EvaluationDAO"
+		parent="baseDAO">
+		<property name="periodDAO">
+			<ref bean="periodDAO" />
+		</property>
+		<property name="courseDAO">
+			<ref bean="courseDAO" />
+		</property>
+	</bean>
+	
 
 	<!-- service -->
 	<bean id="teacherService" class="com.coursemis.service.impl.TeacherService">
@@ -129,6 +160,56 @@
 			<ref bean="sourceManageDAO" />
 		</property>
 	</bean>
+	<bean id="locationService" class="com.coursemis.service.impl.LocationService">
+		<property name="locationDAO">
+			<ref bean="locationDAO" />
+		</property>
+		<property name="teacherDAO">
+			<ref bean="teacherDAO" />
+		</property>
+		<property name="courseDAO">
+			<ref bean="courseDAO" />
+		</property>
+	</bean>
+	<bean id="signInService" class="com.coursemis.service.impl.SignInService">
+		<property name="signInDAO">
+			<ref bean="signInDAO" />
+		</property>
+		<property name="teacherDAO">
+			<ref bean="teacherDAO" />
+		</property>
+		<property name="courseDAO">
+			<ref bean="courseDAO" />
+		</property>
+		<property name="studentDAO">
+			<ref bean="studentDAO" />
+		</property>
+		<property name="locationDAO">
+			<ref bean="locationDAO" />
+		</property>
+	</bean>
+	<bean id="questionBankService" class="com.coursemis.service.impl.QuestionBankService">
+		<property name="questionBankDAO">
+			<ref bean="questionBankDAO" />
+		</property>
+	</bean>
+	<bean id="scoreService" class="com.coursemis.service.impl.ScoreService">
+		<property name="scoreDAO">
+			<ref bean="scoreDAO" />
+		</property>
+	</bean>
+	<bean id="periodService" class="com.coursemis.service.impl.PeriodService">
+		<property name="periodDAO">
+			<ref bean="periodDAO" />
+		</property>
+	</bean>
+	<bean id="evaluationService" class="com.coursemis.service.impl.EvaluationService">
+		<property name="evaluationDAO">
+			<ref bean="evaluationDAO" />
+		</property>
+	</bean>
+
+
 
 	<!-- action -->
 	<bean id="sourceMangerAction" class="com.coursemis.action.SourceMangerAction"
@@ -226,6 +307,18 @@
 		<property name="teacherService">
 			<ref bean="teacherService" />
 		</property>
+		<property name="locationService">
+			<ref bean="locationService" />
+		</property>
+		<property name="signInService">
+			<ref bean="signInService" />
+		</property>
+		<property name="scoreService">
+			<ref bean="scoreService" />
+		</property>
+		<property name="periodService">
+			<ref bean="periodService" />
+		</property>
 	</bean>
 	<bean id="debugAction" class="com.coursemis.action.DebugAction"
 		scope="prototype">
@@ -259,6 +352,9 @@
 		<property name="coursetimeService">
 			<ref bean="coursetimeService" />
 		</property>
+		<property name="locationService">
+			<ref bean="locationService" />
+		</property>
 	</bean>
 	<bean id="teacherManageHomeWorkAction" class="com.coursemis.action.TeacherManageHomeWorkAction"
 		scope="prototype">
@@ -270,6 +366,24 @@
 		</property>
 		<property name="studentHomeWorkService">
 			<ref bean="studentHomeWorkService" />
+		</property>
+		<property name="studentService">
+			<ref bean="studentService" />
+		</property>
+		<property name="periodService">
+			<ref bean="periodService" />
+		</property>
+		<property name="questionBankService">
+			<ref bean="questionBankService" />
+		</property>
+		<property name="scoreService">
+			<ref bean="scoreService" />
+		</property>
+		<property name="courseService">
+			<ref bean="courseService" />
+		</property>
+		<property name="evaluationService">
+			<ref bean="evaluationService" />
 		</property>
 	</bean>
 	<bean id="uploadVideoAction" class="com.upload.UploadVideoAction"
@@ -303,5 +417,18 @@
 		<property name="courseService">
 			<ref bean="courseService" />
 		</property>
+	</bean>
+	
+	<!-- 签到的SignInTimer类 -->
+	<bean id = "signInTimer" class ="com.coursemis.uti.SignInTimer" scope="prototype">
+		<property name="locationService">
+			<ref bean="locationService"/>
+		</property>
+		<property name="courseService">
+			<ref bean="courseService"/>
+		</property>
+	</bean>
+	<!-- 测试okhttp的action -->
+	<bean id = "okhttp" class ="com.coursemis.action.TestOkHttpAction" scope="prototype">
 	</bean>
 </beans>

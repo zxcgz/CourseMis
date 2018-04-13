@@ -43,6 +43,38 @@
             </key>
             <one-to-many class="com.coursemis.model.Coursetime" />
         </set>
+        <set name="locations" inverse="true">
+            <key>
+                <column name="T_C_ID" not-null="true">
+                    <comment>课程id</comment>
+                </column>
+            </key>
+            <one-to-many class="com.coursemis.model.Location" />
+        </set>
+        <set name="evaluations" inverse="true">
+            <key>
+                <column name="E_CID">
+                    <comment>课程id</comment>
+                </column>
+            </key>
+            <one-to-many class="com.coursemis.model.Evaluation" />
+        </set>
+        <set name="scores" inverse="true">
+            <key>
+                <column name="S_CID">
+                    <comment>课程id</comment>
+                </column>
+            </key>
+            <one-to-many class="com.coursemis.model.Score" />
+        </set>
+        <set name="periods" inverse="true">
+            <key>
+                <column name="P_CID">
+                    <comment>课程id</comment>
+                </column>
+            </key>
+            <one-to-many class="com.coursemis.model.Period" />
+        </set>
         <set name="studentcourses" inverse="true">
             <key>
                 <column name="SC_C_ID" not-null="true">
@@ -51,7 +83,14 @@
             </key>
             <one-to-many class="com.coursemis.model.Studentcourse" />
         </set>
-        
+        <set name="signins" inverse="true">
+            <key>
+                <column name="C_ID">
+                    <comment>课程ID，外键</comment>
+                </column>
+            </key>
+            <one-to-many class="com.coursemis.model.Signin" />
+        </set>
         <set name="sourcemanages" inverse="true">
             <key>
                 <column name="SM_C_ID" not-null="true">
@@ -60,7 +99,14 @@
             </key>
             <one-to-many class="com.coursemis.model.Sourcemanage" />
         </set>
-        
+        <set name="questionbanks" inverse="true">
+            <key>
+                <column name="QB_C_ID">
+                    <comment>课程id</comment>
+                </column>
+            </key>
+            <one-to-many class="com.coursemis.model.Questionbank" />
+        </set>
         <set name="courseevaluations" inverse="true">
             <key>
                 <column name="CE_C_ID" not-null="true">

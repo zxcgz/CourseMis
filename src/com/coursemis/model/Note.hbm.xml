@@ -26,7 +26,7 @@
             </column>
         </property>
         <property name="NDatetime" type="java.sql.Timestamp">
-            <column name="N_Datetime" length="19" not-null="true">
+            <column name="N_Datetime" length="0" not-null="true">
                 <comment>发送时间</comment>
             </column>
         </property>

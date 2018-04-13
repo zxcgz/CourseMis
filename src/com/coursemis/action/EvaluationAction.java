@@ -45,7 +45,7 @@ public class EvaluationAction extends ActionSupport implements ServletRequestAwa
 		int option1 = Integer.parseInt(request.getParameter("option1"));
 		int option2 = Integer.parseInt(request.getParameter("option2"));
 		int option3 = Integer.parseInt(request.getParameter("option3"));
-		
+		String feedback = request.getParameter("idea") ;
 		System.out.println("courseid"+courseid+"studentid:"+studentid);
 		
 		Courseevaluation courseevaluation = new Courseevaluation();
@@ -55,7 +55,7 @@ public class EvaluationAction extends ActionSupport implements ServletRequestAwa
 		courseevaluation.setCeQuestion1(option1);
 		courseevaluation.setCeQuestion2(option2);
 		courseevaluation.setCeQuestion3(option3);
-		
+		courseevaluation.setCeFeedback(feedback) ;
 		
 		boolean addEvaluation = courseevaluationService.addCourseevaluation(courseevaluation);
 		

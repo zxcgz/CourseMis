@@ -71,7 +71,6 @@ public class SourceMangerAction extends ActionSupport implements ServletRequestA
     
     //-------------------------------------------------------------------------------------------------------------
     
-	@Override
 	public void setServletResponse(HttpServletResponse response) {
 		this.response = response;
 	}
@@ -84,7 +83,6 @@ public class SourceMangerAction extends ActionSupport implements ServletRequestA
 		this.sourceManageService = sourceManageService;
 	}
 
-	@Override
 	public void setServletRequest(HttpServletRequest request) {
 		this.request=request;
 	}

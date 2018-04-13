@@ -27,8 +27,8 @@ public class CourseevaluationDAO extends BaseDAO implements ICourseevaluationDAO
 		} catch (RuntimeException e){
 			//log.debug("saving TbNotice instance failed");
 			e.printStackTrace();
+			session.close();
 		}
-		session.close();
 		return false;
 	}
 	

@@ -10,6 +10,7 @@ import java.util.Set;
 public class Teacher implements java.io.Serializable {
 
 	// Fields
+
 	private Integer TId;
 	private String TNum;
 	private String TName;
@@ -18,7 +19,10 @@ public class Teacher implements java.io.Serializable {
 	private String TEmail;
 	private String TPassword;
 	private String THead;
+	private Set locations = new HashSet(0);
 	private Set messages = new HashSet(0);
+	private Set signins = new HashSet(0);
+	private Set notes = new HashSet(0);
 	private Set courses = new HashSet(0);
 
 	// Constructors
@@ -26,15 +30,6 @@ public class Teacher implements java.io.Serializable {
 	/** default constructor */
 	public Teacher() {
 	}
-
-	@Override
-	public String toString() {
-		return "Teacher [TId=" + TId + ", TNum=" + TNum + ", TName=" + TName + ", TDepartment=" + TDepartment
-				+ ", TTel=" + TTel + ", TEmail=" + TEmail + ", TPassword=" + TPassword + "]";
-	}
-
-
-
 
 	/** minimal constructor */
 	public Teacher(String TNum, String TName, String TDepartment,
@@ -44,25 +39,22 @@ public class Teacher implements java.io.Serializable {
 		this.TDepartment = TDepartment;
 		this.TPassword = TPassword;
 	}
-	
-	public String getTHead() {
-		return THead;
-	}
-
-	public void setTHead(String tHead) {
-		THead = tHead;
-	}
 
 	/** full constructor */
 	public Teacher(String TNum, String TName, String TDepartment, String TTel,
-			String TEmail, String TPassword, Set messages, Set courses) {
+			String TEmail, String TPassword, String THead, Set locations,
+			Set messages, Set signins, Set notes, Set courses) {
 		this.TNum = TNum;
 		this.TName = TName;
 		this.TDepartment = TDepartment;
 		this.TTel = TTel;
 		this.TEmail = TEmail;
 		this.TPassword = TPassword;
+		this.THead = THead;
+		this.locations = locations;
 		this.messages = messages;
+		this.signins = signins;
+		this.notes = notes;
 		this.courses = courses;
 	}
 
@@ -124,12 +116,44 @@ public class Teacher implements java.io.Serializable {
 		this.TPassword = TPassword;
 	}
 
+	public String getTHead() {
+		return this.THead;
+	}
+
+	public void setTHead(String THead) {
+		this.THead = THead;
+	}
+
+	public Set getLocations() {
+		return this.locations;
+	}
+
+	public void setLocations(Set locations) {
+		this.locations = locations;
+	}
+
 	public Set getMessages() {
 		return this.messages;
 	}
 
 	public void setMessages(Set messages) {
 		this.messages = messages;
+	}
+
+	public Set getSignins() {
+		return this.signins;
+	}
+
+	public void setSignins(Set signins) {
+		this.signins = signins;
+	}
+
+	public Set getNotes() {
+		return this.notes;
+	}
+
+	public void setNotes(Set notes) {
+		this.notes = notes;
 	}
 
 	public Set getCourses() {

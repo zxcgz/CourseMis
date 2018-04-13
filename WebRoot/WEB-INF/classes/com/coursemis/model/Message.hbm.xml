@@ -21,12 +21,12 @@
             </column>
         </property>
         <property name="MContent" type="java.lang.String">
-            <column name="M_Content" length="300" not-null="true">
+            <column name="M_Content" not-null="true">
                 <comment>消息内容</comment>
             </column>
         </property>
         <property name="MDatetime" type="java.sql.Timestamp">
-            <column name="M_Datetime" length="19" not-null="true">
+            <column name="M_Datetime" length="0" not-null="true">
                 <comment>发送时间</comment>
             </column>
         </property>

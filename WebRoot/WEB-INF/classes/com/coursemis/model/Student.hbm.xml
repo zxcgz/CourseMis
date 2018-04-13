@@ -50,6 +50,27 @@
                 <comment>密码</comment>
             </column>
         </property>
+        <property name="SHead" type="java.lang.String">
+            <column name="S_Head" length="65535">
+                <comment>头像</comment>
+            </column>
+        </property>
+        <set name="studenthomeworks" inverse="true">
+            <key>
+                <column name="SH_S_ID">
+                    <comment>学生id，外键</comment>
+                </column>
+            </key>
+            <one-to-many class="com.coursemis.model.Studenthomework" />
+        </set>
+        <set name="scores" inverse="true">
+            <key>
+                <column name="S_SID">
+                    <comment>学生id</comment>
+                </column>
+            </key>
+            <one-to-many class="com.coursemis.model.Score" />
+        </set>
         <set name="studentcourses" inverse="true">
             <key>
                 <column name="SC_S_ID" not-null="true">
@@ -58,14 +79,6 @@
             </key>
             <one-to-many class="com.coursemis.model.Studentcourse" />
         </set>
-        <set name="studenthomeworks" inverse="true">
-            <key>
-                <column name="SH_S_ID" not-null="true">
-                    <comment>学生id，外键</comment>
-                </column>
-            </key>
-            <one-to-many class="com.coursemis.model.Studenthomework" />
-        </set>
         <set name="courseevaluations" inverse="true">
             <key>
                 <column name="CE_S_ID" not-null="true">
@@ -73,6 +86,14 @@
                 </column>
             </key>
             <one-to-many class="com.coursemis.model.Courseevaluation" />
+        </set>
+        <set name="signins" inverse="true">
+            <key>
+                <column name="S_ID">
+                    <comment>学生Id，外键</comment>
+                </column>
+            </key>
+            <one-to-many class="com.coursemis.model.Signin" />
         </set>
     </class>
 </hibernate-mapping>

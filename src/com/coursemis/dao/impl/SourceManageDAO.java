@@ -124,7 +124,6 @@ public class SourceManageDAO extends BaseDAO implements ISourceManageDAO {
 		return list;
 	}
 
-	@Override
 	public List<Sourcemanage> getSourcemanageByTid(int tid) {
 		Session session = getSession();
 		List list = null;

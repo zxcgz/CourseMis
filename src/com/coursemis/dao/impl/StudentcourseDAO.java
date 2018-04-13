@@ -43,11 +43,10 @@ public class StudentcourseDAO extends BaseDAO implements IStudentcourseDAO {
 			//外键查询
 			Query query = session.createQuery("from Studentcourse studentcourse where studentcourse.course.CId = "+courseid);
 			list = query.list();
-			query.executeUpdate();///?
+			//query.executeUpdate();///?
 			tx.commit();
-			//log.debug("get TbUser instance successful");
 		} catch (RuntimeException e){  
-			//log.debug("get TbUser instance failed"); 
+			e.printStackTrace() ;
 		}
 		session.close();
 		return list;

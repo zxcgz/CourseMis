@@ -46,7 +46,6 @@ public class SourceManageService implements ISourceManageService {
 		this.sourceManageDAO = sourceManageDAO;
 	}
 
-	@Override
 	public List<Sourcemanage> getSourcemanageByTid(int tid) {
 		return sourceManageDAO.getSourcemanageByTid(tid);
 	}

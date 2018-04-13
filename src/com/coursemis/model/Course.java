@@ -18,8 +18,14 @@ public class Course implements java.io.Serializable {
 	private Boolean CFlag;
 	private Integer CPointTotalNum;
 	private Set coursetimes = new HashSet(0);
+	private Set locations = new HashSet(0);
+	private Set evaluations = new HashSet(0);
+	private Set scores = new HashSet(0);
+	private Set periods = new HashSet(0);
 	private Set studentcourses = new HashSet(0);
+	private Set signins = new HashSet(0);
 	private Set sourcemanages = new HashSet(0);
+	private Set questionbanks = new HashSet(0);
 	private Set courseevaluations = new HashSet(0);
 
 	// Constructors
@@ -40,16 +46,24 @@ public class Course implements java.io.Serializable {
 
 	/** full constructor */
 	public Course(Teacher teacher, String CNum, String CName, Boolean CFlag,
-			Integer CPointTotalNum, Set coursetimes, Set studentcourses,
-			Set sourcemanages, Set courseevaluations) {
+			Integer CPointTotalNum, Set coursetimes, Set locations,
+			Set evaluations, Set scores, Set periods, Set studentcourses,
+			Set signins, Set sourcemanages, Set questionbanks,
+			Set courseevaluations) {
 		this.teacher = teacher;
 		this.CNum = CNum;
 		this.CName = CName;
 		this.CFlag = CFlag;
 		this.CPointTotalNum = CPointTotalNum;
 		this.coursetimes = coursetimes;
+		this.locations = locations;
+		this.evaluations = evaluations;
+		this.scores = scores;
+		this.periods = periods;
 		this.studentcourses = studentcourses;
+		this.signins = signins;
 		this.sourcemanages = sourcemanages;
+		this.questionbanks = questionbanks;
 		this.courseevaluations = courseevaluations;
 	}
 
@@ -111,6 +125,38 @@ public class Course implements java.io.Serializable {
 		this.coursetimes = coursetimes;
 	}
 
+	public Set getLocations() {
+		return this.locations;
+	}
+
+	public void setLocations(Set locations) {
+		this.locations = locations;
+	}
+
+	public Set getEvaluations() {
+		return this.evaluations;
+	}
+
+	public void setEvaluations(Set evaluations) {
+		this.evaluations = evaluations;
+	}
+
+	public Set getScores() {
+		return this.scores;
+	}
+
+	public void setScores(Set scores) {
+		this.scores = scores;
+	}
+
+	public Set getPeriods() {
+		return this.periods;
+	}
+
+	public void setPeriods(Set periods) {
+		this.periods = periods;
+	}
+
 	public Set getStudentcourses() {
 		return this.studentcourses;
 	}
@@ -119,12 +165,28 @@ public class Course implements java.io.Serializable {
 		this.studentcourses = studentcourses;
 	}
 
+	public Set getSignins() {
+		return this.signins;
+	}
+
+	public void setSignins(Set signins) {
+		this.signins = signins;
+	}
+
 	public Set getSourcemanages() {
 		return this.sourcemanages;
 	}
 
 	public void setSourcemanages(Set sourcemanages) {
 		this.sourcemanages = sourcemanages;
+	}
+
+	public Set getQuestionbanks() {
+		return this.questionbanks;
+	}
+
+	public void setQuestionbanks(Set questionbanks) {
+		this.questionbanks = questionbanks;
 	}
 
 	public Set getCourseevaluations() {

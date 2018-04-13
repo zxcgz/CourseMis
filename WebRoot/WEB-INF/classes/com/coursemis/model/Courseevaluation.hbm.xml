@@ -37,7 +37,12 @@
         </property>
         <property name="ceQuestion3" type="java.lang.Integer">
             <column name="CE_Question3" not-null="true">
-                <comment>课堂建议</comment>
+                <comment>问题三评分</comment>
+            </column>
+        </property>
+        <property name="ceFeedback" type="java.lang.String">
+            <column name="CE_Feedback">
+                <comment>课程反馈，意见</comment>
             </column>
         </property>
     </class>

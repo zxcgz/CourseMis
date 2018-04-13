@@ -10,12 +10,11 @@
             <column name="SM_ID" />
             <generator class="increment" />
         </id>
-        <many-to-one name="course"  cascade="none" class="com.coursemis.model.Course"   fetch="select">
+        <many-to-one name="course" class="com.coursemis.model.Course" fetch="select">
             <column name="SM_C_ID" not-null="true">
                 <comment>课程id，外键</comment>
             </column>
         </many-to-one>
-        
         <property name="smName" type="java.lang.String">
             <column name="SM_Name" length="50" not-null="true">
                 <comment>资源名称（作业+媒体）</comment>
@@ -37,7 +36,7 @@
             </column>
         </property>
         <property name="smDateTime" type="java.sql.Timestamp">
-            <column name="SM_DateTime" length="19" not-null="true">
+            <column name="SM_DateTime" length="0" not-null="true">
                 <comment>资源上传时间</comment>
             </column>
         </property>

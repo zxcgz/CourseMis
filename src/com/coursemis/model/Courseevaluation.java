@@ -15,6 +15,7 @@ public class Courseevaluation implements java.io.Serializable {
 	private Integer ceQuestion1;
 	private Integer ceQuestion2;
 	private Integer ceQuestion3;
+	private String ceFeedback;
 
 	// Constructors
 
@@ -22,7 +23,7 @@ public class Courseevaluation implements java.io.Serializable {
 	public Courseevaluation() {
 	}
 
-	/** full constructor */
+	/** minimal constructor */
 	public Courseevaluation(Student student, Course course, Integer ceWeekNum,
 			Integer ceQuestion1, Integer ceQuestion2, Integer ceQuestion3) {
 		this.student = student;
@@ -31,6 +32,19 @@ public class Courseevaluation implements java.io.Serializable {
 		this.ceQuestion1 = ceQuestion1;
 		this.ceQuestion2 = ceQuestion2;
 		this.ceQuestion3 = ceQuestion3;
+	}
+
+	/** full constructor */
+	public Courseevaluation(Student student, Course course, Integer ceWeekNum,
+			Integer ceQuestion1, Integer ceQuestion2, Integer ceQuestion3,
+			String ceFeedback) {
+		this.student = student;
+		this.course = course;
+		this.ceWeekNum = ceWeekNum;
+		this.ceQuestion1 = ceQuestion1;
+		this.ceQuestion2 = ceQuestion2;
+		this.ceQuestion3 = ceQuestion3;
+		this.ceFeedback = ceFeedback;
 	}
 
 	// Property accessors
@@ -89,6 +103,14 @@ public class Courseevaluation implements java.io.Serializable {
 
 	public void setCeQuestion3(Integer ceQuestion3) {
 		this.ceQuestion3 = ceQuestion3;
+	}
+
+	public String getCeFeedback() {
+		return this.ceFeedback;
+	}
+
+	public void setCeFeedback(String ceFeedback) {
+		this.ceFeedback = ceFeedback;
 	}
 
 }

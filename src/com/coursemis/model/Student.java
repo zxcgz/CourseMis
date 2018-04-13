@@ -18,12 +18,14 @@ public class Student implements java.io.Serializable {
 	private String SDepartment;
 	private String SClass;
 	private String STel;
-	private String SHead;//头像
 	private String SEmail;
 	private String SPassword;
-	private Set studentcourses = new HashSet(0);
+	private String SHead;
 	private Set studenthomeworks = new HashSet(0);
+	private Set scores = new HashSet(0);
+	private Set studentcourses = new HashSet(0);
 	private Set courseevaluations = new HashSet(0);
+	private Set signins = new HashSet(0);
 
 	// Constructors
 
@@ -43,18 +45,11 @@ public class Student implements java.io.Serializable {
 		this.SPassword = SPassword;
 	}
 
-	public String getSHead() {
-		return SHead;
-	}
-
-	public void setSHead(String sHead) {
-		SHead = sHead;
-	}
-
 	/** full constructor */
 	public Student(String SNum, String SName, String SSex, String SDepartment,
 			String SClass, String STel, String SEmail, String SPassword,
-			Set studentcourses, Set studenthomeworks, Set courseevaluations) {
+			String SHead, Set studenthomeworks, Set scores, Set studentcourses,
+			Set courseevaluations, Set signins) {
 		this.SNum = SNum;
 		this.SName = SName;
 		this.SSex = SSex;
@@ -63,9 +58,12 @@ public class Student implements java.io.Serializable {
 		this.STel = STel;
 		this.SEmail = SEmail;
 		this.SPassword = SPassword;
-		this.studentcourses = studentcourses;
+		this.SHead = SHead;
 		this.studenthomeworks = studenthomeworks;
+		this.scores = scores;
+		this.studentcourses = studentcourses;
 		this.courseevaluations = courseevaluations;
+		this.signins = signins;
 	}
 
 	// Property accessors
@@ -142,12 +140,12 @@ public class Student implements java.io.Serializable {
 		this.SPassword = SPassword;
 	}
 
-	public Set getStudentcourses() {
-		return this.studentcourses;
+	public String getSHead() {
+		return this.SHead;
 	}
 
-	public void setStudentcourses(Set studentcourses) {
-		this.studentcourses = studentcourses;
+	public void setSHead(String SHead) {
+		this.SHead = SHead;
 	}
 
 	public Set getStudenthomeworks() {
@@ -158,12 +156,36 @@ public class Student implements java.io.Serializable {
 		this.studenthomeworks = studenthomeworks;
 	}
 
+	public Set getScores() {
+		return this.scores;
+	}
+
+	public void setScores(Set scores) {
+		this.scores = scores;
+	}
+
+	public Set getStudentcourses() {
+		return this.studentcourses;
+	}
+
+	public void setStudentcourses(Set studentcourses) {
+		this.studentcourses = studentcourses;
+	}
+
 	public Set getCourseevaluations() {
 		return this.courseevaluations;
 	}
 
 	public void setCourseevaluations(Set courseevaluations) {
 		this.courseevaluations = courseevaluations;
+	}
+
+	public Set getSignins() {
+		return this.signins;
+	}
+
+	public void setSignins(Set signins) {
+		this.signins = signins;
 	}
 
 }

@@ -6,7 +6,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.coursemis.action.HibernateSessionFactory;
 import com.coursemis.dao.ICourseDAO;
 import com.coursemis.model.Course;
 
