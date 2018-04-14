@@ -22,39 +22,44 @@ public class EvaluationDAO extends BaseDAO implements IEvaluationDAO {
 	private ICourseDAO courseDAO;
 
 	public boolean insertOrUpdate(int cid, int pNum, List<Double> scores) {
-		Gson gson = new Gson() ;
-		String json = gson.toJson(scores) ;
 		Session session = getSession();
 		Transaction beginTransaction = session.beginTransaction();
 		try {
+			System.out.println("insertOrUpdate1");
+			Gson gson = new Gson();
+			System.out.println("insertOrUpdate2");
+			String json = gson.toJson(scores);
+			System.out.println("insertOrUpdate3");
 			// 先查询
 			Query createQuery = session
 					.createQuery("from Evaluation e where e.course.CId = "
-							+ cid + " and e.period.PId = " + pNum);
+							+ cid + " and e.EPid = " + pNum);
+			System.out.println("insertOrUpdate4");
 			Object uniqueResult = createQuery.uniqueResult();
+			System.out.println("insertOrUpdate5");
 			if (uniqueResult == null) {
 				// 没有数据
-				
+				System.out.println("没有数据");
 				Evaluation evaluation = new Evaluation();
 				Period period = periodDAO.getPeriod(cid);
 				Course course = courseDAO.getCourseById(cid);
 				evaluation.setCourse(course);
-				evaluation.setPeriod(period);
+				evaluation.setEPid(period.getPNum());
 				evaluation.setEGrades(json);
 				session.save(evaluation);
 			} else {
 				// 存在数据
 				Evaluation evaluation = (Evaluation) uniqueResult;
 				evaluation.setEGrades(json);
-				session.update(evaluation) ;
-				
+				session.update(evaluation);
+
 			}
-			beginTransaction.commit() ;
+			beginTransaction.commit();
 			session.close();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			beginTransaction.rollback() ;
+			beginTransaction.rollback();
 			session.close();
 		}
 		return false;
@@ -68,7 +73,7 @@ public class EvaluationDAO extends BaseDAO implements IEvaluationDAO {
 					.createQuery("from Evaluation e where e.course.CId = "
 							+ cid);
 			if (createQuery == null) {
-				session.close() ;
+				session.close();
 				return null;
 			} else {
 				List list = createQuery.list();
@@ -89,39 +94,39 @@ public class EvaluationDAO extends BaseDAO implements IEvaluationDAO {
 		try {
 			Query createQuery = session
 					.createQuery("from Evaluation e where e.course.CId = "
-							+ cid + " and e.period.PId = " + pNum);
+							+ cid + " and e.EPid = " + pNum);
 			if (createQuery == null) {
-				session.close() ;
+				session.close();
 				return null;
-			}else {
-				Evaluation uniqueResult = (Evaluation) createQuery.uniqueResult();
-				session.close() ;
-				return uniqueResult ;
+			} else {
+				Evaluation uniqueResult = (Evaluation) createQuery
+						.uniqueResult();
+				session.close();
+				return uniqueResult;
 			}
-			
-			
+
 		} catch (Exception e) {
-			e.printStackTrace() ;
-			session.close() ;
+			e.printStackTrace();
+			session.close();
 		}
 
 		return null;
 	}
 
 	public boolean delete(int cid) {
-		Session session = getSession() ;
-		Transaction beginTransaction = session.beginTransaction() ;
+		Session session = getSession();
+		Transaction beginTransaction = session.beginTransaction();
 		try {
-			List<Evaluation> score = getScore(cid) ;
+			List<Evaluation> score = getScore(cid);
 			for (Evaluation score2 : score) {
-				session.delete(score2) ;
-				beginTransaction.commit() ;
+				session.delete(score2);
+				beginTransaction.commit();
 			}
-			session.close() ;
-			return true ;
+			session.close();
+			return true;
 		} catch (Exception e) {
-			e.printStackTrace() ;
-			beginTransaction.rollback() ;
+			e.printStackTrace();
+			beginTransaction.rollback();
 		}
 		return false;
 	}

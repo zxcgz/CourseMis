@@ -20,7 +20,7 @@
                 <comment>课时数</comment>
             </column>
         </property>
-        <set name="evaluations" inverse="true">
+        <set name="evaluations" inverse="true" lazy="false">
             <key>
                 <column name="E_PID">
                     <comment>课时id</comment>
@@ -28,7 +28,7 @@
             </key>
             <one-to-many class="com.coursemis.model.Evaluation" />
         </set>
-        <set name="scores" inverse="true">
+        <set name="scores" inverse="true" lazy="false">
             <key>
                 <column name="S_PID">
                     <comment>课时</comment>
@@ -36,7 +36,7 @@
             </key>
             <one-to-many class="com.coursemis.model.Score" />
         </set>
-        <set name="questionbanks" inverse="true">
+        <set name="questionbanks" inverse="true" lazy="false">
             <key>
                 <column name="QB_C_PERIOD">
                     <comment>课时</comment>

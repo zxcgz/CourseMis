@@ -52,7 +52,7 @@ public class TeacherManageHomeWorkAction extends ActionSupport implements
 	private IQuestionBankService questionBankService;
 	private IScoreService scoreService;
 	private ICourseService courseService;
-	private IEvaluationService evaluationService ;
+	private IEvaluationService evaluationService;
 
 	public void setServletRequest(HttpServletRequest arg0) {
 		// TODO Auto-generated method stub
@@ -180,10 +180,14 @@ public class TeacherManageHomeWorkAction extends ActionSupport implements
 				.getStudentcourseByCId(cid);
 		Random random = new Random();
 		int nextInt = random.nextInt(studentcourseByCId.size());
+		Student student = studentcourseByCId.get(nextInt).getStudent();
 		// 向指定学生发送提问
 		WebSocket.quiz(studentcourseByCId.get(nextInt).getStudent());
 		JSONObject resp = new JSONObject();
-		resp.put("result", "{}");
+		JSONObject studentJSON = new JSONObject();
+		studentJSON.put("sid", student.getSId());
+		System.out.println("测试。。。" + student.getSId());
+		resp.put("result", studentJSON);
 		PrintWriter out = response.getWriter();
 		out.print(resp.toString());
 		out.flush();
@@ -197,6 +201,7 @@ public class TeacherManageHomeWorkAction extends ActionSupport implements
 	 * @throws IOException
 	 */
 	public void sendCallBackMessage() throws IOException {
+		System.out.println("发送反馈");
 		int tid = Integer.parseInt(request.getParameter("tid"));
 		int cid = Integer.parseInt(request.getParameter("cid"));
 		List<Studentcourse> studentcourseByCId = studentcourseService
@@ -216,9 +221,9 @@ public class TeacherManageHomeWorkAction extends ActionSupport implements
 		out.print(resp.toString());
 		out.flush();
 		out.close();
-		//将课时数加一
-		period.setPNum(periodNum++) ;
-		periodService.addPeriodNum(period) ;
+		// 将课时数加一
+		period.setPNum(periodNum++);
+		periodService.addPeriodNum(period);
 	}
 
 	/**
@@ -227,28 +232,43 @@ public class TeacherManageHomeWorkAction extends ActionSupport implements
 	 * @throws IOException
 	 */
 	public void getTest() throws IOException {
-		int sid = Integer.parseInt(request.getParameter("sid"));
-		int cid = Integer.parseInt(request.getParameter("cid"));
-		// 获取课时信息
-		Student student = studentService.getStudentById(sid);
-		Course course = courseService.getCourseById(cid);
-		Period period = new Period();
-		period.setCourse(course);
-		int periodNum = periodService.getPeriodNum(period);
-		// 获取测验信息
-		List<Questionbank> questionbank = questionBankService.getQuestionbank(
-				cid, periodNum);
-		// 组拼信息o
-		Questionbank[] array = questionbank
-				.toArray(new Questionbank[questionbank.size()]);
-		Gson gson = new Gson();
-		String json = gson.toJson(array);
-		JSONObject resp = new JSONObject();
-		resp.put("result", json);
-		PrintWriter out = response.getWriter();
-		out.print(resp.toString());
-		out.flush();
-		out.close();
+		try {
+			int sid = Integer.parseInt(request.getParameter("sid"));
+			int cid = Integer.parseInt(request.getParameter("cid"));
+			// 获取课时信息
+			Student student = studentService.getStudentById(sid);
+			Course course = courseService.getCourseById(cid);
+			Period period = new Period();
+			period.setCourse(course);
+			int periodNum = periodService.getPeriodNum(period);
+			System.out.println("测试0。。。。" + periodNum);
+			// 获取测验信息
+			List<Questionbank> questionbank = questionBankService
+					.getQuestionbank(cid, periodNum);
+			System.out.println("测试1。。。。" + questionbank.size());
+			for (Questionbank questionbank2 : questionbank) {
+				questionbank2.setCourse(null);
+				questionbank2.setPeriod(null);
+			}
+			// 组拼信息o
+			Questionbank[] array = questionbank
+					.toArray(new Questionbank[questionbank.size()]);
+			System.out.println("测试2");
+			Gson gson = new Gson();
+			System.out.println("测试3");
+			String json = gson.toJson(array);
+			System.out.println("测试4");
+			JSONObject resp = new JSONObject();
+			resp.put("result", json);
+			PrintWriter out = response.getWriter();
+			out.print(resp.toString());
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace() ;
+		}
+
 	}
 
 	/**
@@ -276,10 +296,16 @@ public class TeacherManageHomeWorkAction extends ActionSupport implements
 					break;
 				}
 				// 计算成绩总和
+				Student studentById = studentService.getStudentById( studentcourse
+								.getStudent().getSId()) ;
+				Student student = new Student() ;
+				student.setSName(studentById.getSName()) ;
 				Score s = new Score();
-				s.setSAtten(0) ;
-				s.setSCall(0) ;
-				s.setSQuiz(0) ;
+				s.setSAtten(0);
+				s.setSCall(0);
+				s.setSQuiz(0);
+				s.setSTest(0) ;
+				s.setStudent(student) ;
 				for (Score score : scoresAllPeriodBySId) {
 					System.out.println("？？？？？？？2");
 					System.out.println("？？？？？？？2.1");
@@ -287,12 +313,14 @@ public class TeacherManageHomeWorkAction extends ActionSupport implements
 					System.out.println("？？？？？？？2.2");
 					s.setSCall(s.getSCall() + score.getSCall());
 					s.setSQuiz(s.getSQuiz() + score.getSQuiz());
+					s.setSTest(s.getSTest()+score.getSTest()) ;
 				}
 				System.out.println("？？？？？？？3");
 				// 计算平均成绩
 				s.setSAtten(s.getSAtten() / (scoresAllPeriodBySId.size()));
 				s.setSCall(s.getSCall() / (scoresAllPeriodBySId.size()));
 				s.setSQuiz(s.getSQuiz() / (scoresAllPeriodBySId.size()));
+				s.setSTest(s.getSTest() / (scoresAllPeriodBySId.size())) ;
 				scores.add(s);
 			}
 		} else {
@@ -306,7 +334,8 @@ public class TeacherManageHomeWorkAction extends ActionSupport implements
 				scores.add(score);
 			}
 		}
-		System.out.println("？？？？？？？4////"+(scores.get(0).getCourse()==null));
+		System.out
+				.println("？？？？？？？4////" + (scores.get(0).getStudent().getSName()));
 		Gson gson = new Gson();
 		String json = gson.toJson(scores);
 		System.out.println("？？？？？？？5");
@@ -322,66 +351,98 @@ public class TeacherManageHomeWorkAction extends ActionSupport implements
 
 	/**
 	 * 教师获取反馈
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	public void getCallBack() throws IOException {
 		int tid = Integer.parseInt(request.getParameter("tid"));
 		int cid = Integer.parseInt(request.getParameter("cid"));
-		//获取课时数
-		int periodNum = periodService.getPeriod(cid).getPNum() ;
-		//组拼数据
-		List<Evaluation> score = evaluationService.getScore(cid) ;
-		Gson gson = new Gson() ;
-		String json = gson.toJson(score) ;
-		JSONObject resp = new JSONObject();
-		resp.put("result", json);
-		PrintWriter out = response.getWriter();
-		out.print(resp.toString());
-		out.flush();
-		out.close();
-		
+		// 获取课时数
+		int periodNum = periodService.getPeriod(cid).getPNum();
+		// 组拼数据
+		List<Evaluation> score = evaluationService.getScore(cid);
+		for (Evaluation evaluation : score) {
+			evaluation.setCourse(null);
+		}
+		Gson gson = new Gson();
+		System.out.println(score.size());
+		try {
+			String json = gson.toJson(score);
+			JSONObject resp = new JSONObject();
+			resp.put("result", json);
+			PrintWriter out = response.getWriter();
+			out.print(resp.toString());
+			out.flush();
+			out.close();
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
 	}
 
 	/**
 	 * 学生发送反馈
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
 	public void sendCallBack() throws IOException {
-		int cid = Integer.parseInt(request.getParameter("cid"));
-		int sid = Integer.parseInt(request.getParameter("sid"));
-		String evaluation = request.getParameter("evaluation") ;
-		Gson gson = new Gson() ;
-		List<Double> list = new ArrayList<Double>() ;
-		List<Double> evaluations = gson.fromJson(evaluation, list.getClass()) ;
-		//获取课时数
-		Integer pNum = periodService.getPeriod(cid).getPNum() ;
-		evaluationService.insertOrUpdate(cid, pNum, evaluations) ;
-		JSONObject resp = new JSONObject();
-		resp.put("result", "{}");
-		PrintWriter out = response.getWriter();
-		out.print(resp.toString());
-		out.flush();
-		out.close();
+		try {
+			System.out.println("学生发送反馈1");
+			int cid = Integer.parseInt(request.getParameter("cid"));
+			System.out.println("学生发送反馈2");
+			int sid = Integer.parseInt(request.getParameter("sid"));
+			System.out.println("学生发送反馈3");
+			String evaluation = request.getParameter("evaluation");
+			System.out.println("学生发送反馈4");
+			Gson gson = new Gson();
+			System.out.println("学生发送反馈5");
+			List<Double> list = new ArrayList<Double>();
+			System.out.println("学生发送反馈6");
+			List<Double> evaluations = gson.fromJson(evaluation, list.getClass());
+			System.out.println("学生发送反馈7");
+			// 获取课时数
+			Integer pNum = periodService.getPeriod(cid).getPNum();
+			System.out.println("学生发送反馈8......"+evaluations.size());
+			evaluationService.insertOrUpdate(cid, pNum, evaluations);
+			System.out.println("学生发送反馈9");
+			JSONObject resp = new JSONObject();
+			System.out.println("学生发送反馈10");
+			resp.put("result", "{}");
+			System.out.println("学生发送反馈11");
+			PrintWriter out = response.getWriter();
+			System.out.println("学生发送反馈12");
+			out.print(resp.toString());
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	/**
-	 * 学生发送测验
+	 * 学生发送测验成绩
 	 * 
 	 * @throws IOException
 	 */
 	public void sendTest() throws IOException {
 		int cid = Integer.parseInt(request.getParameter("cid"));
 		int sid = Integer.parseInt(request.getParameter("sid"));
-		int periodId = Integer.parseInt(request.getParameter("periodId"));
 		int result = Integer.parseInt(request.getParameter("result"));
 		// 将成绩写入数据库
-		Score score = new Score();
+		Score score ;
 		Student student = studentService.getStudentById(sid);
 		Course course = courseService.getCourseById(cid);
 		Period period = periodService.getPeriod(cid);
-		score.setCourse(course);
-		score.setStudent(student);
-		score.setPeriod(period);
+		score = scoreService.getScore(cid, sid, period.getPNum()) ;
+		if (score==null) {
+			//没有数据
+			score = new Score() ;
+			score.setCourse(course) ;
+			score.setSPid(period.getPNum()) ;
+		}
+		score.setSTest(result) ;
 		scoreService.insertOrUpdate(score);
 		JSONObject resp = new JSONObject();
 		resp.put("result", "{}");
@@ -391,27 +452,33 @@ public class TeacherManageHomeWorkAction extends ActionSupport implements
 		out.close();
 
 	}
+
 	/**
 	 * 教师发送提问成绩
+	 * 
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	public void sendQuizScore() throws IOException{
+	public void sendQuizScore() throws IOException {
 		int tid = Integer.parseInt(request.getParameter("tid"));
 		int cid = Integer.parseInt(request.getParameter("cid"));
 		int sid = Integer.parseInt(request.getParameter("sid"));
-		int quiz = Integer.parseInt(request.getParameter("score")) ;
-		//获取课时数
-		int periodNum = periodService.getPeriodNum(periodService.getPeriod(cid)) ;
-		//获取成绩对象
-		Score score = scoreService.getScore(cid, sid, periodNum) ;
-		score.setSQuiz(quiz) ;
+		int quiz = Integer.parseInt(request.getParameter("score"));
+		// 获取课时数
+		int periodNum = periodService
+				.getPeriodNum(periodService.getPeriod(cid));
+		// 获取成绩对象
+		Score score = scoreService.getScore(cid, sid, periodNum);
+		System.out.println("获取到成绩");
+		score.setSQuiz(score.getSQuiz() + quiz);
+		scoreService.insertOrUpdate(score);
 		JSONObject resp = new JSONObject();
 		resp.put("result", "{}");
 		PrintWriter out = response.getWriter();
 		out.print(resp.toString());
 		out.flush();
 		out.close();
+		System.out.println("发送成功");
 	}
 
 	public IStudentcourseService getStudentcourseService() {

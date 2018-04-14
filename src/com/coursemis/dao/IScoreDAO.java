@@ -50,5 +50,5 @@ public interface IScoreDAO {
 	 * @param periodId
 	 * @return
 	 */
-	public List<Score> getScoresOnePeriodBySid(int cid,int sid,int periodId) ;
+	public List<Score> getScoresOnePeriodBySid(int cid,int periodId) ;
 }

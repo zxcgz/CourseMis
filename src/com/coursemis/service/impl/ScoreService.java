@@ -30,8 +30,8 @@ public class ScoreService  implements IScoreService{
 		return scoreDAO.getScoresAllPeriodBySId(cid, sid);
 	}
 
-	public List<Score> getScoresOnePeriodBySid(int cid, int sid, int periodId) {
-		return scoreDAO.getScoresOnePeriodBySid(cid, sid, periodId);
+	public List<Score> getScoresOnePeriodBySid(int cid, int periodId) {
+		return scoreDAO.getScoresOnePeriodBySid(cid,  periodId);
 	}
 	
 	

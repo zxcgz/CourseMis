@@ -35,7 +35,7 @@
                 <comment>点到次数</comment>
             </column>
         </property>
-        <set name="coursetimes" inverse="true">
+        <set name="coursetimes" inverse="true" lazy="false">
             <key>
                 <column name="CT_C_ID" not-null="true">
                     <comment>课程id，外键</comment>
@@ -43,7 +43,7 @@
             </key>
             <one-to-many class="com.coursemis.model.Coursetime" />
         </set>
-        <set name="locations" inverse="true">
+        <set name="locations" inverse="true" lazy="false">
             <key>
                 <column name="T_C_ID" not-null="true">
                     <comment>课程id</comment>
@@ -51,7 +51,7 @@
             </key>
             <one-to-many class="com.coursemis.model.Location" />
         </set>
-        <set name="evaluations" inverse="true">
+        <set name="evaluations" inverse="true" lazy="false">
             <key>
                 <column name="E_CID">
                     <comment>课程id</comment>
@@ -59,7 +59,7 @@
             </key>
             <one-to-many class="com.coursemis.model.Evaluation" />
         </set>
-        <set name="scores" inverse="true">
+        <set name="scores" inverse="true" lazy="false">
             <key>
                 <column name="S_CID">
                     <comment>课程id</comment>
@@ -67,7 +67,7 @@
             </key>
             <one-to-many class="com.coursemis.model.Score" />
         </set>
-        <set name="periods" inverse="true">
+        <set name="periods" inverse="true" lazy="false">
             <key>
                 <column name="P_CID">
                     <comment>课程id</comment>
@@ -75,7 +75,7 @@
             </key>
             <one-to-many class="com.coursemis.model.Period" />
         </set>
-        <set name="studentcourses" inverse="true">
+        <set name="studentcourses" inverse="true" lazy="false">
             <key>
                 <column name="SC_C_ID" not-null="true">
                     <comment>课程id，外键</comment>
@@ -83,7 +83,7 @@
             </key>
             <one-to-many class="com.coursemis.model.Studentcourse" />
         </set>
-        <set name="signins" inverse="true">
+        <set name="signins" inverse="true" lazy="false">
             <key>
                 <column name="C_ID">
                     <comment>课程ID，外键</comment>
@@ -91,7 +91,7 @@
             </key>
             <one-to-many class="com.coursemis.model.Signin" />
         </set>
-        <set name="sourcemanages" inverse="true">
+        <set name="sourcemanages" inverse="true" lazy="false">
             <key>
                 <column name="SM_C_ID" not-null="true">
                     <comment>课程id，外键</comment>
@@ -99,7 +99,7 @@
             </key>
             <one-to-many class="com.coursemis.model.Sourcemanage" />
         </set>
-        <set name="questionbanks" inverse="true">
+        <set name="questionbanks" inverse="true" lazy="false">
             <key>
                 <column name="QB_C_ID">
                     <comment>课程id</comment>
@@ -107,7 +107,7 @@
             </key>
             <one-to-many class="com.coursemis.model.Questionbank" />
         </set>
-        <set name="courseevaluations" inverse="true">
+        <set name="courseevaluations" inverse="true" lazy="false">
             <key>
                 <column name="CE_C_ID" not-null="true">
                     <comment>课程id，外键</comment>

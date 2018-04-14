@@ -17,7 +17,7 @@ public class ScoreDAO extends BaseDAO implements IScoreDAO {
 		try {
 			Query createQuery = session
 					.createQuery("from Score s where s.course.CId =  " + cid
-							+ " and s.student.SId = " + sid + " and s.period.PNum = "
+							+ " and s.student.SId = " + sid + " and s.SPid = "
 							+ periodId);
 			Score score = (Score) createQuery.uniqueResult();
 			beginTransaction.commit();
@@ -37,8 +37,8 @@ public class ScoreDAO extends BaseDAO implements IScoreDAO {
 			Query createQuery = session
 					.createQuery("from Score s where s.course.CId = "
 							+ score.getCourse().getCId() + " and s.student.SId = "
-							+ score.getStudent().getSId()+ " and s.period.PNum = "
-							+ score.getPeriod().getPId());
+							+ score.getStudent().getSId()+ " and s.SPid = "
+							+ score.getSPid());
 			Score result = (Score) createQuery.uniqueResult();
 			if (result == null) {
 				// 没有数据
@@ -50,6 +50,7 @@ public class ScoreDAO extends BaseDAO implements IScoreDAO {
 				result.setSAtten(result.getSAtten() + score.getSAtten());
 				result.setSCall(result.getSCall() + score.getSCall());
 				result.setSQuiz(result.getSQuiz() + score.getSQuiz());
+				result.setSTest(result.getSTest()+score.getSTest()) ;
 				session.update(result);
 			}
 			beginTransaction.commit();
@@ -69,8 +70,7 @@ public class ScoreDAO extends BaseDAO implements IScoreDAO {
 			Query createQuery = session
 					.createQuery("delete from Score s where s.course.CId = "
 							+ score.getCourse().getCId() + " and s.student.SId = "
-							+ score.getStudent().getSId()+ " and s.period.PNum = "
-							+ score.getPeriod().getPId());
+							+ score.getStudent().getSId());
 			createQuery.executeUpdate();
 			beginTransaction.commit();
 			session.close();
@@ -100,13 +100,12 @@ public class ScoreDAO extends BaseDAO implements IScoreDAO {
 		return null;
 	}
 
-	public List<Score> getScoresOnePeriodBySid(int cid, int sid, int periodId) {
+	public List<Score> getScoresOnePeriodBySid(int cid, int periodId) {
 		Session session = getSession() ;
 		Transaction beginTransaction = session.beginTransaction() ;
 		try {
 			Query createQuery = session.createQuery("from Score s where s.course.CId = "
-							+ cid + " and s.student.SId = "
-							+ sid+" and s.period.PNum = "
+							+ cid +" and s.SPid = "
 							+periodId) ;
 			List<Score> list = createQuery.list() ;
 			beginTransaction.commit() ;

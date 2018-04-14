@@ -50,8 +50,8 @@ public class StudentOperationAction extends ActionSupport implements
 	private ISourceManageDAO sourceManageDAO;
 	private ILocationService locationService;
 	private ISignInService signInService;
-	private IScoreService scoreService ;
-	private IPeriodService periodService ;
+	private IScoreService scoreService;
+	private IPeriodService periodService;
 	private RegulationDAO rdao = new RegulationDAO();// /
 
 	public void setServletRequest(HttpServletRequest arg0) {
@@ -130,7 +130,7 @@ public class StudentOperationAction extends ActionSupport implements
 		double latitude = Double.parseDouble(request.getParameter("latitude"));
 		double longitude = Double
 				.parseDouble(request.getParameter("longitude"));
-		System.out.println("位置。。"+latitude+"......"+longitude);
+		System.out.println("位置。。" + latitude + "......" + longitude);
 		List<Studentcourse> scl = studentcourseService
 				.getStudentcourseBySId(sid);
 		JSONObject resp = new JSONObject();
@@ -155,16 +155,26 @@ public class StudentOperationAction extends ActionSupport implements
 						System.out.println("设置签到成功");
 						signInService.signIn(location.getTeacher().getTId(),
 								location.getCourse().getCId(), sid);
-						//获取课时数
-						Period period = new Period() ;
-						period.setCourse(course) ;
-						int periodNum = periodService.getPeriodNum(period) ;
-						//设置成绩
-						Score score = new Score() ;
-						score.setCourse(course) ;
-						score.setSAtten(periodNum) ;
-						//将签到成绩写入成绩表中
-						scoreService.insertOrUpdate(score) ;
+						// 获取课时数
+						Period period = new Period();
+						period.setCourse(course);
+						int periodNum = periodService.getPeriodNum(period);
+						// 设置成绩
+						/*
+						 * Score score = new Score() ; score.setCourse(course) ;
+						 * score.setSAtten(periodNum) ;
+						 */
+						Score score;
+						score = scoreService.getScore(course.getCId(), sid,
+								periodNum);
+						if (score == null) {
+							score = new Score();
+							score.setCourse(course);
+							score.setStudent(sc.getStudent());
+						}
+						score.setSAtten(10);
+						// 将签到成绩写入成绩表中
+						scoreService.insertOrUpdate(score);
 						break;
 					}
 					System.out.print("课程id" + course.getCId());
@@ -190,49 +200,48 @@ public class StudentOperationAction extends ActionSupport implements
 	 */
 	private boolean checkLocation(double s_latitude, double s_longitude,
 			Location location) {
-		//调用工具类进行计算
-		double distance = LocationUtil.getDistance(s_latitude, s_longitude, location.getLatitude(), location.getLongitude()) ;
-		System.out.println("距离     "+distance);
-		distance = GetDistance(s_latitude, s_longitude, location.getLatitude(), location.getLongitude());
-		System.out.println("距离1     "+distance);
-		if (distance<=30.0) {
-			//距离在合法的范围内
-			return true ;
+		// 调用工具类进行计算
+		double distance = LocationUtil.getDistance(s_latitude, s_longitude,
+				location.getLatitude(), location.getLongitude());
+		System.out.println("距离     " + distance);
+		distance = GetDistance(s_latitude, s_longitude, location.getLatitude(),
+				location.getLongitude());
+		System.out.println("距离1     " + distance);
+		if (distance <= 30.0) {
+			// 距离在合法的范围内
+			return true;
 		}
 		return false;
 	}
-	
-	private static double EARTH_RADIUS = 6371.393;  
-    private static double rad(double d)  
-    {  
-       return d * Math.PI / 180.0;  
-    }  
-  
-    /** 
-     * 计算两个经纬度之间的距离 
-     * @param lat1 
-     * @param lng1 
-     * @param lat2 
-     * @param lng2 
-     * @return 
-     */  
-    public static double GetDistance(double lat1, double lng1, double lat2, double lng2)  
-    {  
-       double radLat1 = rad(lat1);  
-       double radLat2 = rad(lat2);  
-       double a = radLat1 - radLat2;      
-       double b = rad(lng1) - rad(lng2);  
-       double s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a/2),2) +   
-        Math.cos(radLat1)*Math.cos(radLat2)*Math.pow(Math.sin(b/2),2)));  
-       s = s * EARTH_RADIUS;  
-       s = Math.round(s * 1000);  
-       return s;  
-    }  
-      
-	
-	
-	
-	
+
+	private static double EARTH_RADIUS = 6371.393;
+
+	private static double rad(double d) {
+		return d * Math.PI / 180.0;
+	}
+
+	/**
+	 * 计算两个经纬度之间的距离
+	 * 
+	 * @param lat1
+	 * @param lng1
+	 * @param lat2
+	 * @param lng2
+	 * @return
+	 */
+	public static double GetDistance(double lat1, double lng1, double lat2,
+			double lng2) {
+		double radLat1 = rad(lat1);
+		double radLat2 = rad(lat2);
+		double a = radLat1 - radLat2;
+		double b = rad(lng1) - rad(lng2);
+		double s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2)
+				+ Math.cos(radLat1) * Math.cos(radLat2)
+				* Math.pow(Math.sin(b / 2), 2)));
+		s = s * EARTH_RADIUS;
+		s = Math.round(s * 1000);
+		return s;
+	}
 
 	public void studentSignInComfirm() throws IOException {
 		boolean flage = true;
@@ -289,6 +298,7 @@ public class StudentOperationAction extends ActionSupport implements
 		System.out.print("end>>>>>>>");
 
 	}
+
 	public void selectStudentCourseInfo() throws IOException {
 
 		String sid = request.getParameter("sid");
@@ -455,6 +465,5 @@ public class StudentOperationAction extends ActionSupport implements
 	public void setPeriodService(IPeriodService periodService) {
 		this.periodService = periodService;
 	}
-	
-	
+
 }

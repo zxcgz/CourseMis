@@ -44,8 +44,8 @@ public class QuestionBankDAO extends BaseDAO implements IQuestionBankDAO{
 		try {
 			Query createQuery = session.createQuery("from Questionbank bank where bank.course.CId = "+cid+" and bank.period.PId = "+periodId) ;
 			List list = createQuery.list() ;
-			session.close() ;
 			beginTransaction.commit() ;
+			session.close() ;
 			return list ;
 		} catch (Exception e) {
 			e.printStackTrace() ;

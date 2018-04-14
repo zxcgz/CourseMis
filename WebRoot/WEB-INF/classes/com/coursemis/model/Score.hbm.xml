@@ -20,11 +20,11 @@
                 <comment>学生id</comment>
             </column>
         </many-to-one>
-        <many-to-one name="period" class="com.coursemis.model.Period" fetch="select">
+        <property name="SPid" type="java.lang.Integer">
             <column name="S_PID">
-                <comment>课时</comment>
+                <comment>课时数</comment>
             </column>
-        </many-to-one>
+        </property>
         <property name="SAtten" type="java.lang.Integer">
             <column name="S_ATTEN">
                 <comment>考勤成绩</comment>
@@ -38,6 +38,11 @@
         <property name="SCall" type="java.lang.Integer">
             <column name="S_CALL">
                 <comment>点名成绩</comment>
+            </column>
+        </property>
+        <property name="STest" type="java.lang.Integer">
+            <column name="S_TEST">
+                <comment>测验成绩</comment>
             </column>
         </property>
     </class>

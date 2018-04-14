@@ -45,7 +45,7 @@
                 <comment>头像</comment>
             </column>
         </property>
-        <set name="locations" inverse="true">
+        <set name="locations" inverse="true" lazy="false">
             <key>
                 <column name="T_ID" not-null="true" unique="true">
                     <comment>主键，教师id</comment>
@@ -53,7 +53,7 @@
             </key>
             <one-to-many class="com.coursemis.model.Location" />
         </set>
-        <set name="messages" inverse="true">
+        <set name="messages" inverse="true" lazy="false">
             <key>
                 <column name="M_T_ID" not-null="true">
                     <comment>教师id，外键</comment>
@@ -61,7 +61,7 @@
             </key>
             <one-to-many class="com.coursemis.model.Message" />
         </set>
-        <set name="signins" inverse="true">
+        <set name="signins" inverse="true" lazy="false">
             <key>
                 <column name="T_ID">
                     <comment>教师id，外键</comment>
@@ -69,7 +69,7 @@
             </key>
             <one-to-many class="com.coursemis.model.Signin" />
         </set>
-        <set name="notes" inverse="true">
+        <set name="notes" inverse="true" lazy="false">
             <key>
                 <column name="N_T_ID" not-null="true">
                     <comment>教师id，外键</comment>
@@ -77,7 +77,7 @@
             </key>
             <one-to-many class="com.coursemis.model.Note" />
         </set>
-        <set name="courses" inverse="true">
+        <set name="courses" inverse="true" lazy="false">
             <key>
                 <column name="C_T_ID" not-null="true">
                     <comment>教师id，外键</comment>

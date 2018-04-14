@@ -40,7 +40,7 @@
                 <comment>资源上传时间</comment>
             </column>
         </property>
-        <set name="studenthomeworks" inverse="true">
+        <set name="studenthomeworks" inverse="true" lazy="false">
             <key>
                 <column name="SH_SM_ID" not-null="true">
                     <comment>资源管理id，外键</comment>

@@ -55,7 +55,7 @@
                 <comment>头像</comment>
             </column>
         </property>
-        <set name="studenthomeworks" inverse="true">
+        <set name="studenthomeworks" inverse="true" lazy="false">
             <key>
                 <column name="SH_S_ID">
                     <comment>学生id，外键</comment>
@@ -63,7 +63,7 @@
             </key>
             <one-to-many class="com.coursemis.model.Studenthomework" />
         </set>
-        <set name="scores" inverse="true">
+        <set name="scores" inverse="true" lazy="false">
             <key>
                 <column name="S_SID">
                     <comment>学生id</comment>
@@ -71,7 +71,7 @@
             </key>
             <one-to-many class="com.coursemis.model.Score" />
         </set>
-        <set name="studentcourses" inverse="true">
+        <set name="studentcourses" inverse="true" lazy="false">
             <key>
                 <column name="SC_S_ID" not-null="true">
                     <comment>学生id，外键</comment>
@@ -79,7 +79,7 @@
             </key>
             <one-to-many class="com.coursemis.model.Studentcourse" />
         </set>
-        <set name="courseevaluations" inverse="true">
+        <set name="courseevaluations" inverse="true" lazy="false">
             <key>
                 <column name="CE_S_ID" not-null="true">
                     <comment>学生id，外键</comment>
@@ -87,7 +87,7 @@
             </key>
             <one-to-many class="com.coursemis.model.Courseevaluation" />
         </set>
-        <set name="signins" inverse="true">
+        <set name="signins" inverse="true" lazy="false">
             <key>
                 <column name="S_ID">
                     <comment>学生Id，外键</comment>
